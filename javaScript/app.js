@@ -1,39 +1,67 @@
-function puertaIncorrectaRandom(){
-    let puertaIncorrectaRandom = Math.floor(Math.random() * 2 + 1);
-    return puertaIncorrectaRandom;
-}
+let puertaCorrecta;
+let puertaIncorrecta1;
+let puertaIncorrecta2;
+
 function elegirPuertaRandom() {
     let puertaRandom = Math.floor(Math.random() * 3 + 1);
     return puertaRandom;
 }
+function elegirTresPuertasRandom(){ //todo Comprobar si existe uniformidad aleatoria para las 3 variables
+    puertaCorrecta = elegirPuertaRandom();
+    if (puertaCorrecta == 1) {
+        let rangoPuertaIncorrecta = Math.random() * 2 + 1;
+        if (rangoPuertaIncorrecta < 2) {
+            puertaIncorrecta1 = 2;
+            puertaIncorrecta2 = 3;
+        } else {
+            puertaIncorrecta1 = 3;
+            puertaIncorrecta2 = 2;
+        }
+    } else if (puertaCorrecta == 3) {
+        let rangoPuertaIncorrecta = Math.random() * 2 + 1;
+        if (rangoPuertaIncorrecta < 2) {
+            puertaIncorrecta1 = 1;
+            puertaIncorrecta2 = 2;
+        } else {
+            puertaIncorrecta1 = 2;
+            puertaIncorrecta2 = 1;
+        }
+    } else if (puertaCorrecta == 2) {
+        let rangoPuertaIncorrecta = Math.random() * 2 + 1;
+        if (rangoPuertaIncorrecta < 2) {
+            puertaIncorrecta1 = 1;
+            puertaIncorrecta2 = 3;
+        } else {
+            puertaIncorrecta1 = 3;
+            puertaIncorrecta2 = 1;
+        }
+    }
+}
 
-let puertaCorrecta = 3;
-let puertaIncorrecta1 = 1;
-let puertaIncorrecta2 = 2;
-
-// let puertaCorrecta = elegirPuertaRandom();
-// if (puertaCorrecta == 1) {
-//     rangoPuertaIncorrecta = Math.random() * 3 + 1;
-//     if (rangoPuertaIncorrecta < 2) {
-//         puertaIncorrecta1 = 1
-//     }
-// }
 
 function abrirPuerta(puerta) {
-    document.write(`He abierto la puerta : ${puerta} y es incorrecta<br>`);
-    decision = window.confirm(`¿Desea cambiar de puerta?`);
-    if (decision) {
-        return `cambiar`;
+    if (puerta == `puertaIncorrecta1`) {
+        document.write(`He abierto la puerta : ${puertaIncorrecta1} y es incorrecta<br>`);
+        decision = window.confirm(`¿Desea cambiar de puerta?`);
+        if (decision) {
+            return `cambiar`;
+        }
+    } else if (puerta == `puertaIncorrecta2`) {
+        document.write(`He abierto la puerta : ${puertaIncorrecta2} y es incorrecta<br>`);
+        decision = window.confirm(`¿Desea cambiar de puerta?`);
+        if (decision) {
+            return `cambiar`;
+        }
     }
 }
 
 function juegoDePuertas(primerEleccion) {
     document.write(`Usted abrió la puerta : ${primerEleccion}<br>`);
     if (primerEleccion == puertaCorrecta) {
-        let puertaIncorrecta = puertaIncorrectaRandom()
+        let puertaIncorrecta = `puertaIncorrecta${Math.floor(Math.random() * 2 + 1)}`
         if (abrirPuerta(puertaIncorrecta) == `cambiar`) {
             document.write(`Usted hizo un cambio de puerta : `);
-            if (puertaIncorrecta == puertaIncorrecta1) {
+            if (puertaIncorrecta == `puertaIncorrecta1`) {
                 return puertaIncorrecta2;
             } else {
                 return puertaIncorrecta1;
@@ -44,7 +72,7 @@ function juegoDePuertas(primerEleccion) {
         }
         
     } else if (primerEleccion == puertaIncorrecta1) {
-        if (abrirPuerta(puertaIncorrecta2) == `cambiar`) {
+        if (abrirPuerta(`puertaIncorrecta2`) == `cambiar`) {
             document.write(`Usted hizo un cambio de puerta : `);
             return puertaCorrecta;
         } else {
@@ -52,7 +80,7 @@ function juegoDePuertas(primerEleccion) {
             return puertaIncorrecta1;
         }
     } else if (primerEleccion == puertaIncorrecta2) {
-        if (abrirPuerta(puertaIncorrecta1) == `cambiar`) {
+        if (abrirPuerta(`puertaIncorrecta1`) == `cambiar`) {
             document.write(`Usted hizo un cambio de puerta : `);
             return puertaCorrecta;
         } else {
@@ -62,11 +90,12 @@ function juegoDePuertas(primerEleccion) {
     }
 }
 
+//* Función juegoDePuertas
 let resultado;
 let ganar = 0;
 let perder = 0;
 
-function contarJuegoDePuerta() {
+function contarJuegoDePuertas() {
     resultado = juegoDePuertas(elegirPuertaRandom());
     if (resultado == puertaCorrecta) {
         document.write(`<span style='color:lightGreen'>Felicidades</span>, la puerta ${resultado} era la correcta<br>`);
@@ -76,9 +105,12 @@ function contarJuegoDePuerta() {
         perder++;
     }
 }
-let i;
-for (i = 0; i < 10; i++) {
-    contarJuegoDePuerta();
+
+//* Jugar
+let index;
+
+for (index = 0; index < 10; index++) {
+    elegirTresPuertasRandom();
+    contarJuegoDePuertas();
 }
-document.write(`<br>Usted ganó ${ganar} veces y perdió ${perder} veces<br>
-Eso representa un ${ganar * 100 / i} % de victorias`);
+document.write(`<br>Usted ganó ${ganar} veces y perdió ${perder} veces<br>Eso representa un ${ganar * 100 / index} % de victorias`);
