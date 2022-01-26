@@ -1,0 +1,20 @@
+:root {
+    --mainColor: #78e29c;
+    --secColor: #2bac6b;
+    --background: #242834;
+    --darkBackground: #0d1322;
+}
+/*Globales*/
+html {   
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {   
+    font-size: 16px; /* 1rem = 10px */
+    background-color: var(--background);
+    color: white;
+}
